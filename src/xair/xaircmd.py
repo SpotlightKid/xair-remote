@@ -71,7 +71,9 @@ class XAirCmdApp(cmd.Cmd):
         })
         self.srcport = srcport
         self.debug = debug
-        self.commands = parse_commands()
+        self.osc_commands = parse_commands()
+        self.osc_command_names = sorted([cmd.address.lstrip('/')
+                                         for cmd in self.osc_commands.values()])
         self.queue = queue.Queue()
         self.osc = ServerThread(self.srcport)
         self.osc.add_method(None, None, self.osc_recv)
@@ -122,9 +124,13 @@ class XAirCmdApp(cmd.Cmd):
     def help_osc(self):
         self.poutput("osc ADDR [arg1 [arg2] ... [argn]]")
 
-    def complete_osc(self, text, line, start, end):
-        log.debug((text, line, start, end))
-        return [cmd.command for cmd in self.commands if cmd.command.startswith(text)]
+    def complete_osc(self, text, line, begidx, endidx):
+        log.debug((text, line, begidx, endidx))
+
+        #if not text.startswith('/'):
+        #    text = '/' + text
+
+        return self.delimiter_complete(text, line, begidx, endidx, self.osc_command_names, '/')
 
     def p_ok(self, msg):
         self.poutput(msg, color=Fore.GREEN)
