@@ -1,0 +1,51 @@
+# Python bytecode
+*.py[cod]
+__pycache__
+
+# C extensions
+*.so
+
+# Log files
+*.log
+
+# Packages
+*.egg
+*.egg-info
+dist/
+build/
+*.eggs/
+eggs/
+parts/
+.installed.cfg
+setuptools-*.tar.gz
+distribute-*.tar.gz
+MANIFEST
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.cache/
+.coverage
+.pytest_cache/
+.tox/
+nosetests.xml
+htmlcov
+
+# Translations
+*.mo
+
+# Misc IDEs
+.mr.developer.cfg
+.project
+.pydevproject
+
+# Complexity
+output/*.html
+output/*/index.html
+
+# Sphinx
+docs/_build
+
+# Geany project files
+*.geany
