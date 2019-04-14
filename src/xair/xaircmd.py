@@ -19,6 +19,7 @@ from collections import namedtuple
 from os.path import dirname, expanduser, join
 
 import cmd2 as cmd
+from colorama import Fore
 from liblo import ServerThread
 
 
@@ -120,10 +121,10 @@ class XAirCmdApp(cmd.Cmd):
         return [cmd.command for cmd in self.commands if cmd.command.startswith(text)]
 
     def p_ok(self, msg):
-        self.poutput(self.colorize(msg, 'green'))
+        self.poutput(msg, color=Fore.GREEN)
 
     def p_warn(self, msg):
-        self.poutput(self.colorize(msg, 'yellow'))
+        self.poutput(msg, color=Fore.YELLOW)
 
     def start_osc_server(self) -> None:
         self.osc.start()
