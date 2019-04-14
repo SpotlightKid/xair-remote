@@ -32,10 +32,16 @@ def parse_commands(filename='xair-cmdlist.csv'):
     commands = dict()
     with open(join(dirname(__file__), filename), newline='') as csvfile:
         reader = csv.reader(csvfile, delimiter=',', strict=True)
-        for i, row in enumerate(reader):
-            if i == 0 and tuple(row) == XAirCommand._fields:
-                continue
-            commands[row[0]] = XAirCommand(*row)
+        try:
+            for i, row in enumerate(reader):
+                if i == 0 and tuple(row) == XAirCommand._fields:
+                    continue
+                try:
+                    commands[row[0]] = XAirCommand(*row)
+                except TypeError:
+                    log.warn("Invalid command in '%s', line %i: %r", filename, i, row)
+        except csv.Error as exc:
+            log.error("Error in command file '%s', line %i: %s", filename, i, exc)
     return commands
 
 
