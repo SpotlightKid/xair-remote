@@ -62,13 +62,13 @@ class XAirCmdApp(cmd.Cmd):
             '/': 'osc',
         })
         # add built-in custom command aliases
+        kwargs.setdefault('use_ipython', True)
+        super().__init__(**kwargs)
         self.aliases.update({
             'mute': 'osc /lr/mix/on 0',
             'unmute': 'osc /lr/mix/on 1',
             'mainvol': '/lr/mix/fader',
         })
-        kwargs.setdefault('use_ipython', True)
-        super().__init__(**kwargs)
         self.srcport = srcport
         self.debug = debug
         self.commands = parse_commands()
